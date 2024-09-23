@@ -16,18 +16,6 @@ services:
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - AWS_REGION=${AWS_REGION}
 
-  # Unity Catalog
-  unity:
-    image: rhasson/unity_catalog
-    container_name: unity-catalog
-    networks:
-      workshop-net:
-    ports:
-      - 8080:8080
-      - 8081:8081
-    volumes:
-      - ./unity/etc:/etc
-
   # Spark
   spark:
     image: rhasson/spark
