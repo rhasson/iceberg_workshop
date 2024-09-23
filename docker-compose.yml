@@ -1,0 +1,67 @@
+services:
+
+  # Polaris Catalog
+  polaris:
+    image: rhasson/polaris
+    container_name: polaris-catalog
+    networks:
+      workshop-net:
+    ports:
+      - 8181:8181
+      - 8182:8182
+    volumes:
+      - ${PWD}/polaris/polaris-server.yml:/app/polaris-server.yml
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+
+  # Unity Catalog
+  unity:
+    image: rhasson/unity_catalog
+    container_name: unity-catalog
+    networks:
+      workshop-net:
+    ports:
+      - 8080:8080
+      - 8081:8081
+    volumes:
+      - ./unity/etc:/etc
+
+  # Spark
+  spark:
+    image: rhasson/spark
+    container_name: spark-iceberg
+    networks:
+      workshop-net:
+    depends_on:
+      - polaris
+    volumes:
+      - ./spark/warehouse:/home/iceberg/warehouse
+      - ./spark/notebooks:/home/iceberg/notebooks
+      - ${PWD}/spark/spark-defaults.conf:/opt/spark/conf/spark-defaults.conf
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+    ports:
+      - 8888:8888
+      - 8080:8080
+      - 10000:10000
+      - 10001:10001
+
+  # Trinodb
+  trino:
+    image: trinodb/trino:latest
+    container_name: trino
+    networks:
+      workshop-net:
+    depends_on:
+      - polaris
+    ports:
+      - "80:8080"
+    volumes:
+      - ./trino/catalog:/etc/trino/catalog  
+
+networks:
+  workshop-net:
