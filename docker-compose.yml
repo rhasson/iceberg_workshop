@@ -2,7 +2,7 @@ services:
 
   # Polaris Catalog
   polaris:
-    image: rhasson/polaris_cli
+    image: rhasson/polaris_catalog_w_cli
     container_name: polaris-catalog
     networks:
       workshop-net:
