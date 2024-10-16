@@ -2,7 +2,7 @@ services:
 
   # Polaris Catalog
   polaris:
-    image: rhasson/polaris
+    image: rhasson/polaris_cli
     container_name: polaris-catalog
     networks:
       workshop-net:
@@ -11,10 +11,15 @@ services:
       - 8182:8182
     volumes:
       - ${PWD}/polaris/polaris-server.yml:/app/polaris-server.yml
+      - ${PWD}/polaris/catalog_setup.sh:/app/catalog_setup.sh
     environment:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - AWS_REGION=${AWS_REGION}
+    command:
+      - /app/bin/polaris-service
+      - server
+      - polaris-server.yml
 
   # Spark
   spark:
@@ -50,6 +55,10 @@ services:
       - "80:8080"
     volumes:
       - ./trino/catalog:/etc/trino/catalog  
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
 
 networks:
   workshop-net:
