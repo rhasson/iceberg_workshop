@@ -16,6 +16,9 @@ Name this file `keys.env`.
 
 ## Polaris Catalog
 
+### Docker image
+A [polaris_catalog_w_cli](https://hub.docker.com/r/rhasson/polaris_catalog_w_cli) image can be found in Docker Hub and is available for ARM64 and AMD64 platforms.
+
 ### Configuring the catalog
 The polaris catalog comes with default configuration that you shouldn't need to change if you're testing locally. 
 If you want to change anything, you can configure it by editing `/polaris/polaris-server.yml`. This file will be copied into the container when it starts.
@@ -42,8 +45,10 @@ Save the user credentials for later in this workshop.
 
 ## Spark
 
-### Configuring Spark
+### Docker image
+A custom [spark](https://hub.docker.com/r/rhasson/spark) image is available on Docker Hub. It includes Spark, Iceberg and Jupyter Lab.
 
+### Configuring Spark
 NOTE: The Spark image provided is built using Spark v3.5.2 and Iceberg v1.6.1. If you want to build your own container using different package versions, you'll need to edit the `/spark/Dockerfile` and build the image from scratch.
 
 Configure your Spark environment by editing the `/spark/spark-default.conf`. The default configuration implements two types of catalogs - Glue and Polaris. You can skip configuring this file and reconfigure it at runtime during the workshop.
