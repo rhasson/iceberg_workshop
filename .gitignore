@@ -2,3 +2,6 @@
 .DS_Store
 polaris_src/
 unity_src/
+spark/notebooks/.ipynb_checkpoints/
+spark/notebooks/derby.log
+spark/notebooks/metastore_db/
