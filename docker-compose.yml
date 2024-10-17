@@ -34,8 +34,6 @@ services:
       - ./spark/notebooks:/home/iceberg/notebooks
       - ${PWD}/spark/spark-defaults.conf:/opt/spark/conf/spark-defaults.conf
     environment:
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - AWS_REGION=${AWS_REGION}
     ports:
       - 8888:8888
@@ -56,8 +54,6 @@ services:
     volumes:
       - ./trino/catalog:/etc/trino/catalog  
     environment:
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - AWS_REGION=${AWS_REGION}
 
 networks:
